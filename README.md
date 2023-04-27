@@ -28,7 +28,7 @@ THEN I can save my initials and my score
 Users can take a short quiz can get a score depending on how long they took to finish the quiz. Users can then enter in their initials and be placed onto the highscores with their score.
 
 ## Credits
-Thank you to [CodingNepal](https://www.codingnepalweb.com/quiz-app-with-timer-javascript/) for getting me started in wrapping my head around what I need to do. Thank you to [Kylie Fox](https://github.com/kmfox1087/API-CODE-QUIZ-CHALLENGE-4) for helping me condense the code I had written into a more simple and easy format.
+Thank you to [CodingNepal](https://www.codingnepalweb.com/quiz-app-with-timer-javascript/) for getting me started in wrapping my head around what I need to do. Thank you to [Kylie Fox](https://github.com/kmfox1087) for helping me condense the code I had written into a more simple and easy format.
 
 Create a Quiz App with Timer using HTML CSS & JavaScript. (2020, October 6). CodingNepal. https://www.codingnepalweb.com/quiz-app-with-timer-javascript/
 
