@@ -46,14 +46,7 @@ var quizBody = document.querySelector(".quiz-body");
 var timeLeft = document.getElementById('timeLeft');
 var startQuiz = document.querySelector('#start-quiz');
 var questBody = document.querySelector("#questions-body");
-var questText = document.querySelector('#question-text');
-var questChoice = document.querySelector('#question-choices');
-
-var corrImg = new Image(100, 200);
-corrImg.src = './assests/images/correct.jpg';
-
-var wrongImg = new Image(100, 200);
-wrongImg.src = './assests/images/incorrect.jpg';
+var choiceList = document.querySelector('#choice-list')
 
 //creating varibles for quiz
 var score = 0;
@@ -77,8 +70,8 @@ function finished() {
     timeLeft = '';
 
     //create a title for the end of the quiz
-    let closeState = document.createElement('h1');
-    closeState.setAttribute("class", 'closing-statement');
+    var closeState = document.createElement('h1');
+    closeState.setAttribute("id", 'closing-statement');
     closeState.textContent = 'You have finished the quiz.';
     //add the closing statement to the question body
     questBody.appendChild(closeState);
@@ -100,11 +93,6 @@ function finished() {
     let initials = document.createElement('input');
     let submit = document.createElement('button');
 
-    //adds the created elements into the main body of the quiz
-    questBody.appendChild(input);
-    questBody.appendChild(initials);
-    questBody.appendChild(submit);
-
     //text that asks the user to input their initials
     initials.setAttribute('class', 'initials');
     initials.textContent = 'Please enter in your initials for documenting';
@@ -116,6 +104,12 @@ function finished() {
     //submit button
     multiAttribute(submit, {'class': 'submit', 'type': 'submit'});
     submit.textContent = "Submit";
+
+    //adds the created elements into the main body of the quiz
+    questBody.appendChild(input);
+    questBody.appendChild(initials);
+    questBody.appendChild(submit);
+
 
     //function to store the user initals
     submit.addEventListener("click", function () {
@@ -147,60 +141,47 @@ function finished() {
 }
 
 //creates a list element where the question choices will go
-var choiceList = document.createElement("ul");
+var newList = document.createElement("ul");
 //pushes questions onto the screen and creates list items for the choices
 function display(questIndex) {
     
     //turns the questions and answers section blank first
     questBody.innerHTML = '';
-    let questTag = `<span>` + questions[questIndex].question + `</span>`;
+    choiceList.innerHTML ='';
+    
 
-    let choiceTag =  '<div class="option"><span>'+ questions[questIndex].choices[0] +'</span></div>' + '<div class="option"><span>'+ questions[questIndex].choices[1] +'</span></div>' + '<div class="option"><span>'+ questions[questIndex].choices[2] +'</span></div>' + '<div class="option"><span>'+ questions[questIndex].choices[3] +'</span></div>';
+    for(var i = 0; i < questions.length; i++) {
+        //pulls the questions from the questions array
+        var quizQuest = questions[questIndex].question;
+        //pulls the choices from the questions array
+        var quizChoice = questions[questIndex].choices;
+        //displays the question onto the screen in the form of text
+        questBody.textContent = quizQuest;
+    }  
 
-
-    questText.innerHTML = questTag;
-    questChoice.innerHTML = choiceTag;
-
-    const choice = questChoice.querySelectorAll(".option");
-    for(i = 0; i < choice.length; i++) {
-        choice[i].setAttribute("onclick", "choiceSelected(this)");
-    }
-
-    choice.addEventListener('click', rightLeft());
-    console.log(questText)
-    console.log(questChoice)
-
-    // for(let i = 0; i < questions.length; i++) {
-    //     //pulls the questions from the questions array
-    //     const quizQuest = questions[questIndex].question[i];
-    //     //pulls the choices from the questions array
-    //     const quizChoice = questions[questIndex].choices[i];
-    //     //displays the question onto the screen in the form of text
-    //     questBody.textContent = quizQuest;
-
-    //     //displays the choices for the questions
-    //     quizChoice.forEach(function (listItem) {
-    //     //creates a list item
-    //     let itemList = document.createElement('li');
-    //     //sets the content of the list to the listItem
-    //     itemList.textContent = listItem;
-    //     //sets the created list into the question body
-    //     questBody.appendChild(choiceList);
-    //     //sets the list items into the list inside the question body
-    //     choiceList.appendChild(itemList);
-    //     //calls the function to the list item, clicking it as a button to change to next question
-    //     itemList.on('click', rightLeft());
-    // });
-    // }  
+    quizChoice.forEach((listItem) => {
+        //creates a list item
+        let itemList = document.createElement('li');
+        //sets the content of the list to the listItem
+            itemList.textContent = listItem;
+        //sets the created list into the question body
+            questBody.appendChild(newList);
+        //sets the list items into the list inside the question body
+            newList.appendChild(itemList);
+        //calls the function to the list item, clicking it as a button to change to next question
+            itemList.addEventListener('click', (rightLeft));
+    });
+    
 }
 
 function rightLeft(event) {
-    let lefty = event.target;
-
+    var lefty = event.target;
+    
+    
     if(lefty.matches('li')) {
-        let righty = document.createElement("div");
+        var righty = document.createElement("div");
         righty.setAttribute("id", "righty");
-
+        questBody.appendChild(righty);
         if(lefty.textContent === questions[questIndex].answer){
             score++;
             righty.textContent = 'correct'
@@ -217,7 +198,7 @@ function rightLeft(event) {
     } else {
         display(questIndex);
     }
-    questBody.appendChild(righty);
+    
 }
 
 
@@ -228,7 +209,7 @@ startQuiz.addEventListener('click', function() {
             timeSeconds--;
             timeLeft.textContent = timeSeconds + "second(s)";
 
-            if(timeLeft <= 0) {
+            if(timeLeft = 0) {
                 clearInterval(timeInt);
                 finished();
                 timeLeft.textContent("There is no time left...");

@@ -78,6 +78,13 @@ button {
     box-shadow: 10px; color: rgb(184, 171, 171)
 }
 
+#timeLeft {
+    border: 2px groove var(--teal);
+    float: right;
+    background-color: #292922;
+    color: azure;
+}
+
 #quiz-body {
     margin: 15px;
 }
